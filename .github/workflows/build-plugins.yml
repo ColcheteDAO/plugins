@@ -55,7 +55,7 @@ jobs:
         with:
           repository: ColcheteDAO/DuneFall
           path: _build/DuneFall
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT || secrets.PAT || secrets.TOKEN || github.token }}
 
       - name: Build DuneFall
         if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
@@ -83,7 +83,7 @@ jobs:
         with:
           repository: ColcheteDAO/TikTokRetentionPlugin
           path: _build/TikTokRetentionPlugin
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT || secrets.PAT || secrets.TOKEN || github.token }}
 
       - name: Build TikTokRetentionPlugin
         if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
