@@ -30,6 +30,7 @@ jobs:
   build-and-sync:
     name: Build & Sync Plugins
     runs-on: ubuntu-latest
+    environment: main
 
     steps:
       - name: Checkout plugins repository
@@ -55,7 +56,7 @@ jobs:
         with:
           repository: ColcheteDAO/DuneFall
           path: _build/DuneFall
-          token: ${{ github.token }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Build DuneFall
         if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
@@ -83,7 +84,7 @@ jobs:
         with:
           repository: ColcheteDAO/TikTokRetentionPlugin
           path: _build/TikTokRetentionPlugin
-          token: ${{ github.token }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Build TikTokRetentionPlugin
         if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
