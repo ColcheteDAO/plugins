@@ -76,6 +76,10 @@ jobs:
           mkdir -p DuneFall
           rm -f DuneFall/*.jar
           cp "$JAR_FILE" DuneFall/
+          if [ -f _build/DuneFall/SPEC.md ]; then
+            echo "Copying SPEC.md for DuneFall..."
+            cp _build/DuneFall/SPEC.md DuneFall/
+          fi
           echo "DuneFall updated successfully:"
           ls -lh DuneFall/
 
@@ -104,6 +108,10 @@ jobs:
           mkdir -p TikTokRetentionPlugin
           rm -f TikTokRetentionPlugin/*.jar
           cp "$JAR_FILE" TikTokRetentionPlugin/
+          if [ -f _build/TikTokRetentionPlugin/SPEC.md ]; then
+            echo "Copying SPEC.md for TikTokRetentionPlugin..."
+            cp _build/TikTokRetentionPlugin/SPEC.md TikTokRetentionPlugin/
+          fi
           echo "TikTokRetentionPlugin updated successfully:"
           ls -lh TikTokRetentionPlugin/
 
@@ -111,13 +119,13 @@ jobs:
         if: always()
         run: rm -rf _build
 
-      - name: Upload JAR Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: compiled-plugins
           path: |
-            DuneFall/*.jar
-            TikTokRetentionPlugin/*.jar
+            DuneFall/
+            TikTokRetentionPlugin/
           retention-days: 30
 
       - name: Commit and push updated plugins
@@ -126,7 +134,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes in built plugins detected."
           else
-            git commit -m "chore(ci): update compiled plugin jars [skip ci]"
+            git commit -m "chore(ci): update compiled plugin jars and specs [skip ci]"
             git pull --rebase origin main
             git push origin main
           fi
