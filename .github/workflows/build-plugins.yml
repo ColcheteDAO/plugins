@@ -1,6 +1,8 @@
 name: Build and Update Plugins
 
 on:
+  schedule:
+    - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
       target:
@@ -51,7 +53,7 @@ jobs:
 
       # --- Build DuneFall ---
       - name: Checkout DuneFall
-        if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
         uses: actions/checkout@v6
         with:
           repository: ColcheteDAO/DuneFall
@@ -59,7 +61,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Build DuneFall
-        if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
         run: |
           echo "Compiling DuneFall with Maven..."
           mvn -B clean package --file _build/DuneFall/pom.xml --no-transfer-progress
@@ -79,7 +81,7 @@ jobs:
 
       # --- Build TikTokRetentionPlugin ---
       - name: Checkout TikTokRetentionPlugin
-        if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
         uses: actions/checkout@v6
         with:
           repository: ColcheteDAO/TikTokRetentionPlugin
@@ -87,7 +89,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Build TikTokRetentionPlugin
-        if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
         run: |
           echo "Compiling TikTokRetentionPlugin with Maven..."
           mvn -B clean package --file _build/TikTokRetentionPlugin/pom.xml --no-transfer-progress
