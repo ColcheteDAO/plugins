@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout plugins repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -51,7 +51,7 @@ jobs:
       # --- Build DuneFall ---
       - name: Checkout DuneFall
         if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'DuneFall' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-dunefall' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ColcheteDAO/DuneFall
           path: _build/DuneFall
@@ -79,7 +79,7 @@ jobs:
       # --- Build TikTokRetentionPlugin ---
       - name: Checkout TikTokRetentionPlugin
         if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'TikTokRetentionPlugin' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-tiktokretention' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ColcheteDAO/TikTokRetentionPlugin
           path: _build/TikTokRetentionPlugin
