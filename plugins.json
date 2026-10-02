@@ -1,0 +1,90 @@
+[
+  {
+    "id": "dunefall",
+    "slug": "dunefall",
+    "name": "DuneFall",
+    "title": "✦ DuneFall: Laboratory Edition ✦",
+    "subtitle": "Interactive TikTok Live Stream Mini-Game & StreamTK Manager for PaperMC 1.21+",
+    "description": "Commercial-grade, turn-key Minecraft plugin engineered specifically for interactive TikTok Live Streams. Gamifies your live broadcasts by putting viewers in total control of the arena using TikTok gifts (sand avalanches, TNT, lightning, cages, platform purges). Built for PaperMC 1.21+ with 120-level shovel evolution, specimen economy, and zero TPS drops.",
+    "iconUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/DuneFall/icon.png",
+    "downloads": 15400,
+    "categories": [
+      "Streamer Tools",
+      "Interactive",
+      "Mini-Game"
+    ],
+    "author": "ColcheteDAO",
+    "downloadUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/DuneFall/DuneFall-1.0.0.jar",
+    "version": "1.0.0",
+    "jarFile": "DuneFall-1.0.0.jar",
+    "source": "recommended",
+    "sourceRepo": "https://github.com/ColcheteDAO/plugins",
+    "specUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/DuneFall/SPEC.md",
+    "highlights": [
+      "Interactive TikTok Live Mini-Game controlled via viewer gifts (StreamTK / SuperStream ready)",
+      "120-Level in-hand Equipment Evolution Engine (Pioneer Shovel ➔ Obsidian Excavator)",
+      "Laboratory Specimen Economy (/shop, /sell, tactical stimulants, blast protection armor)",
+      "Continuous Auto-Repair Protocol (/dunefall autorepair) & Anvil Repair Station",
+      "TikTok-Optimized Stream HUD (Lowered BossBar, Action Bar Purge Meter) & Master Hide Switch (/hud)"
+    ]
+  },
+  {
+    "id": "tiktokretention",
+    "slug": "tiktokretentionplugin",
+    "name": "TikTokRetentionPlugin",
+    "title": "TikTokRetentionPlugin",
+    "subtitle": "Ultimate Interactive TikTok Live Retention Challenge",
+    "description": "Server-side Minecraft plugin crafted specifically for live streamers on TikTok. Turns the classic \"If my stream drops below X viewers, the world ends\" challenge into a fully automated, customizable in-game experience with native TikTok polling, coin/gift time multipliers, Tab List likers leaderboard, and defeat sequences.",
+    "iconUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/TikTokRetentionPlugin/icon.png",
+    "downloads": 24800,
+    "categories": [
+      "Streamer Tools",
+      "Interactive",
+      "Live Retention"
+    ],
+    "author": "ColcheteDAO",
+    "downloadUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/TikTokRetentionPlugin/TikTokRetentionPlugin-1.0.47.jar",
+    "version": "1.0.47",
+    "jarFile": "TikTokRetentionPlugin-1.0.47.jar",
+    "source": "recommended",
+    "sourceRepo": "https://github.com/ColcheteDAO/plugins",
+    "specUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/TikTokRetentionPlugin/SPEC.md",
+    "highlights": [
+      "3-Phase Challenge Engine: Automated Grace Period ➔ Retention Monitoring ➔ Sudden Death",
+      "Direct Native TikTok Live connection: Input your @username directly in-game (Zero Python/Node scripts)",
+      "Gift & Coin Time Multipliers: Every TikTok coin or gift sent adds precious survival seconds",
+      "Stream Likes Engine & Tab List Top Likers Leaderboard (/rank, /likes)",
+      "Dramatic Defeat Sequence: Inventory wipe, spectator mode, and cinematic full-screen YOU LOSE"
+    ]
+  },
+  {
+    "id": "votebattle",
+    "slug": "votebattle",
+    "name": "VoteBattle",
+    "title": "⚔️ Vote Battle: Arena Edition 🏰",
+    "subtitle": "Interactive Team Sand Tower & TNT Airstrike Battle for PaperMC 1.21+",
+    "description": "High-octane, interactive Minecraft mini-game and live-streaming plugin engineered for PaperMC 1.21+. Teams (Red vs Blue) compete by building their Sand Tower with votes/likes and bombing the opponent tower with precision TNT airstrikes!",
+    "iconUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/VoteBattle/icon.png",
+    "downloads": 8200,
+    "categories": [
+      "Streamer Tools",
+      "Interactive",
+      "Mini-Game",
+      "PvP"
+    ],
+    "author": "ColcheteDAO",
+    "downloadUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/VoteBattle/VoteBattle-1.0.0.jar",
+    "version": "1.0.0",
+    "jarFile": "VoteBattle-1.0.0.jar",
+    "source": "recommended",
+    "sourceRepo": "https://github.com/ColcheteDAO/plugins",
+    "specUrl": "https://raw.githubusercontent.com/ColcheteDAO/plugins/main/VoteBattle/SPEC.md",
+    "highlights": [
+      "Red vs Blue Team Battle: Join via chat (!red / !blue) or automate via stream likes/votes",
+      "Dynamic Sand Tower Building: Cast votes or likes to add sand blocks layer-by-layer",
+      "TNT Opponent Tower Airstrikes: Bomb opponent tower (/tnt blue) while arena map is 100% blast protected",
+      "Live Action Bar & Scoreboard: Real-time tower height progress, timer, and MVP rankings",
+      "Stream Automation Ready: Plug-and-play triggers for TikTok Live, YouTube Live, and Twitch"
+    ]
+  }
+]

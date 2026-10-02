@@ -149,6 +149,43 @@ jobs:
           echo "VoteBattle updated successfully:"
           ls -lh VoteBattle/
 
+      - name: Update plugins.json manifest
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const manifestPath = path.join(process.cwd(), 'plugins.json');
+            let manifest = [];
+            if (fs.existsSync(manifestPath)) {
+              try {
+                manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              } catch (e) {}
+            }
+
+            const dirs = ['DuneFall', 'TikTokRetentionPlugin', 'VoteBattle'];
+            for (const dirName of dirs) {
+              if (!fs.existsSync(dirName)) continue;
+              const files = fs.readdirSync(dirName);
+              const jar = files.find(f => f.endsWith('.jar') && !f.startsWith('original-'));
+              if (!jar) continue;
+
+              const verMatch = jar.match(/-([0-9]+\.[0-9]+(?:\.[0-9]+)?)/);
+              const version = verMatch ? verMatch[1] : '1.0.0';
+
+              const idx = manifest.findIndex(p => (p.name && p.name.toLowerCase() === dirName.toLowerCase()) || (p.id && p.id.toLowerCase() === dirName.toLowerCase()));
+              if (idx >= 0) {
+                manifest[idx].version = version;
+                manifest[idx].jarFile = jar;
+                manifest[idx].downloadUrl = 'https://raw.githubusercontent.com/ColcheteDAO/plugins/main/' + dirName + '/' + jar;
+                if (files.includes('SPEC.md')) {
+                  manifest[idx].specUrl = 'https://raw.githubusercontent.com/ColcheteDAO/plugins/main/' + dirName + '/SPEC.md';
+                }
+              }
+            }
+            fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+            console.log('Updated plugins.json successfully');
+          "
+
       - name: Cleanup build workspace
         if: always()
         run: rm -rf _build
@@ -165,7 +202,7 @@ jobs:
 
       - name: Commit and push updated plugins
         run: |
-          git add DuneFall/ TikTokRetentionPlugin/ VoteBattle/
+          git add DuneFall/ TikTokRetentionPlugin/ VoteBattle/ plugins.json
           if git diff --staged --quiet; then
             echo "No changes in built plugins detected."
           else
