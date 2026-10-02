@@ -89,6 +89,7 @@ DuneFall is designed for plug-and-play console automation. Configure your TikTok
 - `/dunefall delete` – Eradicate the active arena and halt timers.
 - `/dunefall reset` – Full administrative rebuild back to default dimensions with Netherite floor.
 - `/dunefall addsand [rows]` – Adds more sand stratum without modifying or repairing the base floor & teleports to top.
+- `/dunefall autofall [on/off/interval/amount/color/status]` *(or `/dunefall sand autofall`)* – Configure periodic automatic sand drops (quantity per interval in seconds).
 - `/dunefall tp` – Emergency panic teleport to the highest sand block.
 - `/dunefall stop` – Pause or resume the active round timer.
 - `/dunefall timer [seconds]` – Adjust the countdown timer limit.
@@ -157,6 +158,11 @@ arena:
   floor_default: "NETHERITE_BLOCK"
   instant_fall_physics: true
   drop_sand: false # Blocks vanish cleanly without entity clutter
+  auto_fall:
+    enabled: false # Periodically drops sand automatically into the arena
+    interval_seconds: 5 # Interval in seconds between drops
+    amount: 1 # Quantity of sand blocks per interval
+    color: "random" # Options: random, default, or specific color
 ```
 
 ---
