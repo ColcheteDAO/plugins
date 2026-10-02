@@ -14,6 +14,7 @@ on:
           - all
           - DuneFall
           - TikTokRetentionPlugin
+          - VoteBattle
   push:
     branches:
       - main
@@ -24,6 +25,7 @@ on:
       - build-plugins
       - build-dunefall
       - build-tiktokretention
+      - build-votebattle
 
 permissions:
   contents: write
@@ -115,6 +117,38 @@ jobs:
           echo "TikTokRetentionPlugin updated successfully:"
           ls -lh TikTokRetentionPlugin/
 
+      # --- Build VoteBattle ---
+      - name: Checkout VoteBattle
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.target == 'all' || github.event.inputs.target == 'VoteBattle' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-votebattle' }}
+        uses: actions/checkout@v6
+        with:
+          repository: ColcheteDAO/VoteBattle
+          path: _build/VoteBattle
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Build VoteBattle
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.target == 'all' || github.event.inputs.target == 'VoteBattle' || github.event.inputs.target == '' || github.event.action == 'build-plugins' || github.event.action == 'build-votebattle' }}
+        run: |
+          echo "Compiling VoteBattle with Maven..."
+          mvn -B clean package --file _build/VoteBattle/pom.xml --no-transfer-progress
+
+          JAR_FILE=$(ls _build/VoteBattle/target/*.jar 2>/dev/null | grep -v 'original-' | head -n 1 || true)
+          if [ -z "$JAR_FILE" ]; then
+            echo "::error::No JAR file generated in _build/VoteBattle/target/"
+            exit 1
+          fi
+
+          echo "Found built JAR: $JAR_FILE"
+          mkdir -p VoteBattle
+          rm -f VoteBattle/*.jar
+          cp "$JAR_FILE" VoteBattle/
+          if [ -f _build/VoteBattle/SPEC.md ]; then
+            echo "Copying SPEC.md for VoteBattle..."
+            cp _build/VoteBattle/SPEC.md VoteBattle/
+          fi
+          echo "VoteBattle updated successfully:"
+          ls -lh VoteBattle/
+
       - name: Cleanup build workspace
         if: always()
         run: rm -rf _build
@@ -126,11 +160,12 @@ jobs:
           path: |
             DuneFall/
             TikTokRetentionPlugin/
+            VoteBattle/
           retention-days: 30
 
       - name: Commit and push updated plugins
         run: |
-          git add DuneFall/ TikTokRetentionPlugin/
+          git add DuneFall/ TikTokRetentionPlugin/ VoteBattle/
           if git diff --staged --quiet; then
             echo "No changes in built plugins detected."
           else
