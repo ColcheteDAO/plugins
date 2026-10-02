@@ -34,19 +34,22 @@ Whether deployed on a multiplayer event server or integrated with **TikTok Live*
 - **Chat Formatting**: Custom chat renderer prefixes player messages with their active team badge.
 
 ### ⏳ 2. Sand Tower Physics & The "Like" Mechanic
-- **Tower Progression**: When a like is credited to a player/viewer (e.g. via `/like <player/viewer> [amount]` or `/vb like <player/viewer> [amount]`), one or more sand blocks are added to that person's team tower!
-- **Dual Placement Architecture**:
-  - **Falling Block Mode (`falling_block_animation: true`)**: Sand spawns high above the tower and falls naturally with gravity physics, accompanied by sand placement particles and audio cues.
-  - **Direct Block Mode (`falling_block_animation: false`)**: Instantly solidifies blocks at the next available elevation layer.
+- **Tower Progression & Random Falling**: When a like is credited to a player/viewer (e.g. via `/like <player/viewer> [amount]` or `/vb like <player/viewer> [amount]`), sand blocks fall **randomly across the base platform**, creating dynamic and organic mounds of sand!
+- **Dynamic Physics & Staggered Drops**:
+  - Drops falling sand blocks directly above randomly chosen `(X, Z)` positions across the base.
+  - Multi-like barrages (e.g. `/like user 5`) are smoothly staggered with a 2-tick interval, raining sand down sequentially onto different parts of the base!
+  - Guaranteed Solidification: A foundation check and 15-tick solidifier failsafe ensures every falling sand block lands securely and is never lost or destroyed.
 - **Footprint Flexibility**:
-  - `radius: 0`: Single vertical pillar (1x1 classic sand column race).
-  - `radius: 1`: 3x3 platform footprint filled layer-by-layer like a castle tower.
-  - `radius: 2+`: Expandable multi-block fortress towers.
+  - `size: 1`: Single vertical pillar (1x1 classic sand column race).
+  - `size: 3`: 3x3 platform footprint with randomized sand drop points.
+  - `size: 5+`: Large expandable multi-block fortress towers.
 - **Contributor Tracking**: Records the exact number of likes and sand blocks contributed by each player/viewer for live MVP rankings.
 
 ### 💣 3. TNT Opponent Tower Airstrikes
 - **Direct Airstrike Dispatch**:
-  - Players or viewers can bomb the opposing tower using `/tnt [opponent|team] [amount]` or `/vb tnt <team> [amount] [attacker]`.
+  - Players or viewers can bomb the opposing tower using `/tnt <username|team|opponent> [amount] [username]` or `/vb tnt ...`.
+  - When passing a username (e.g. `/tnt Notch 5`), the plugin automatically looks up that user's team, targets their opponent's tower, and credits that user with the attacks for MVP leaderboards.
+  - Console and external stream integrations can easily dispatch gifts directly: `/tnt <viewerName> [amount]` or `/tnt <team> [amount] <viewerName>`.
 - **Smooth Staggered Barrages**: High-volume TNT requests are staggered with tick intervals to produce a realistic aerial bombardment instead of chaotic entity collision.
 - **🛡️ 100% Guaranteed Arena Protection**:
   - All Vote Battle TNT entities are tagged with custom `PersistentDataContainer` (PDC) metadata.
@@ -92,21 +95,25 @@ Whether deployed on a multiplayer event server or integrated with **TikTok Live*
 ### Player & Viewer Commands:
 | Command | Aliases | Description |
 | :--- | :--- | :--- |
-| `/join <red\|blue>` | — | Join the Red or Blue team. |
+| `/join <team> [username]` | — | Join a team or register/assign a specific username into a team. |
 | `/like <player/viewer> [amount]` | — | Add sand block(s) to a player's team tower. |
-| `/tnt [opponent\|team] [amount]` | — | Launch primed TNT airstrike onto opponent tower. |
+| `/tnt <username\|team\|opponent> [amount] [username]` | — | Launch primed TNT airstrike onto opponent tower (or target opponent of specified user). |
 
 ### Chat Triggers:
 - Type `!red`, `#red`, or `!join red` in Minecraft chat to join Team Red.
 - Type `!blue`, `#blue`, or `!join blue` in Minecraft chat to join Team Blue.
+- If a custom match is active (e.g. Lions vs Tigers), type `!Lions` or `!Tigers` to join that team!
 
 ### Administrative Commands (`/votebattle` or `/vb`):
 | Command | Permission | Description |
 | :--- | :--- | :--- |
-| `/vb settower <red\|blue>` | `votebattle.admin` | Sets the tower center base at your feet. |
+| `/vb join <team> [username]` | `votebattle.player` | Join team or assign a player/viewer into that team. |
+| `/vb match <team1> <team2>` | `votebattle.admin` | Create a new match with custom team names (e.g. `/vb match Lions Tigers`). |
+| `/vb start [team1] [team2]` | `votebattle.admin` | Starts match countdown (optionally sets custom team names). |
+| `/vb setname <team> <name>` | `votebattle.admin` | Renames a team during or before a match. |
+| `/vb settower <team> [size]` | `votebattle.admin` | Sets tower center base with custom size (e.g. `1` for 1x1, `3` for 3x3) and auto-deletes existing sand blocks. |
 | `/vb setspawn <red\|blue>` | `votebattle.admin` | Sets the team spawn location. |
-| `/vb buildbases` | `votebattle.admin` | Generates decorative colored concrete platforms under towers. |
-| `/vb start` | `votebattle.admin` | Starts the 5-second countdown and begins the match. |
+| `/vb buildbase [team|all] [size]` | `votebattle.admin` | Generates solid foundation platforms under towers with custom size (e.g. `/vb buildbase 3` or `/vb buildbase red 5`). |
 | `/vb stop` | `votebattle.admin` | Stops the running match. |
 | `/vb reset` | `votebattle.admin` | Clears all tower sand and resets team scores. |
 | `/vb stats` | `votebattle.player` | Displays live tower heights and statistics. |
