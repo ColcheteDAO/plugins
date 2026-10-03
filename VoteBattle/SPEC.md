@@ -61,10 +61,15 @@ Whether deployed on a multiplayer event server or integrated with **TikTok Live*
   - Immediate red title alert on the screens of all players on the targeted team: `⚠ INCOMING TNT! ⚠`.
   - Smoke vortex and blast particle effects upon impact.
 
-### 🏆 4. Match Lifecycle & Win Conditions
+### 🏆 4. Match Lifecycle, Win Tracking & Auto-Rounds
 - **State Engine**: Managed across states `WAITING`, `STARTING`, `IN_PROGRESS`, and `ENDED`.
 - **Win Condition A (Height Goal)**: The first team whose tower reaches the target height (default: 50m) instantly triggers round victory.
-- **Win Condition B (Time Limit)**: If the round timer expires (e.g., 5 minutes), the team with the highest tower / most sand is crowned champion.
+- **Win Condition B (Time Limit)**: If the round timer expires (default: 5 minutes), the team with the highest tower / most sand is crowned champion.
+- **Persistent Win Tracking**: Win counters (`[X Wins]`) are recorded for Red and Blue factions across rounds.
+- **Automatic Consecutive Rounds**:
+  - Once time expires or a team wins, an auto-restart countdown begins (default: 10s cooldown for celebration & stats review).
+  - Automatically resets towers, updates round numbers, and starts the next round seamlessly without admin intervention!
+  - Can be toggled on/off on the fly with `/vb autostart [on|off]`.
 - **Celebration Ceremony**:
   - Colored firework barrages launched directly from the winning tower's summit.
   - Full-screen gold victory title and fanfare (`UI_TOAST_CHALLENGE_COMPLETE`).
@@ -72,13 +77,15 @@ Whether deployed on a multiplayer event server or integrated with **TikTok Live*
 
 ### 📊 5. Live Stream HUD & Broadcast Interface
 - **Dual-Colored Adventure BossBar**:
-  - Displays dynamic tug-of-war balance: `RED: 24m ⚔ BLUE: 18m ★ Goal: 50m`.
+  - Displays dynamic tug-of-war balance with live wins: `RED [2W]: 24m ⚔ BLUE [1W]: 18m ★ Goal: 50m`.
   - Progress bar dynamically shifts towards the leading team.
-- **Sidebar Scoreboard**:
-  - Match Status & Countdown Timer (`04:32`).
-  - Red Team: Current Height, Sand Count, Members, Total Likes, TNT bombs sent.
-  - Blue Team: Current Height, Sand Count, Members, Total Likes, TNT bombs sent.
-  - Target height goal marker.
+- **Sidebar Scoreboard (15-Line Live Stream Display)**:
+  - Match Timer & Current Round (`Time: 04:32 | R#3` or `Next Round: 7s`).
+  - Team Wins Summary (`Wins: 2 - 1`).
+  - Red Team: Tower Height, Sand Count, Members, and Win Badge (`[2W]`).
+  - Blue Team: Tower Height, Sand Count, Members, and Win Badge (`[1W]`).
+  - **Live In-Game Leaderboard (`★ LEADERBOARD ★`)**: Real-time Top 3 contributors ranking (colored by team, with total contribution points).
+  - Target height goal marker & game state.
 
 ### 🌐 6. Built-in Zero-Overhead HTTP REST Bridge
 - Runs an embedded HTTP server (default port `8085`) using standard Java runtime APIs with zero external dependencies:
@@ -109,14 +116,16 @@ Whether deployed on a multiplayer event server or integrated with **TikTok Live*
 | :--- | :--- | :--- |
 | `/vb join <team> [username]` | `votebattle.player` | Join team or assign a player/viewer into that team. |
 | `/vb match <team1> <team2>` | `votebattle.admin` | Create a new match with custom team names (e.g. `/vb match Lions Tigers`). |
-| `/vb start [team1] [team2]` | `votebattle.admin` | Starts match countdown (optionally sets custom team names). |
+| `/vb start [team1] [team2]` | `votebattle.admin` | Starts a new game, resetting win scores & leaderboard (optionally with custom teams). |
 | `/vb setname <team> <name>` | `votebattle.admin` | Renames a team during or before a match. |
 | `/vb settower <team> [size]` | `votebattle.admin` | Sets tower center base with custom size (e.g. `1` for 1x1, `3` for 3x3) and auto-deletes existing sand blocks. |
 | `/vb setspawn <red\|blue>` | `votebattle.admin` | Sets the team spawn location. |
 | `/vb buildbase [team|all] [size]` | `votebattle.admin` | Generates solid foundation platforms under towers with custom size (e.g. `/vb buildbase 3` or `/vb buildbase red 5`). |
-| `/vb stop` | `votebattle.admin` | Stops the running match. |
-| `/vb reset` | `votebattle.admin` | Clears all tower sand and resets team scores. |
-| `/vb stats` | `votebattle.player` | Displays live tower heights and statistics. |
+| `/vb stop` | `votebattle.admin` | Stops the running match and cancels auto-restart. |
+| `/vb reset [arena\|wins\|all]` | `votebattle.admin` | Clears tower sand, resets team wins, or resets entire session. |
+| `/vb autostart [on\|off]` | `votebattle.admin` | Toggles automatic next round start when time finishes or match ends. |
+| `/vb setwins <team> <amount>` | `votebattle.admin` | Manually sets the win counter for a team. |
+| `/vb stats` | `votebattle.player` | Displays live tower heights, team win scores, and contributor leaderboard. |
 | `/vb reload` | `votebattle.admin` | Reloads `config.yml` settings on the fly. |
 
 ---
@@ -137,6 +146,12 @@ game:
   win_by_height: true
   # Seconds for match countdown
   countdown_seconds: 5
+  # Automatically start another round when match time finishes or match ends
+  auto_start_next_round: true
+  # Seconds to wait between rounds before auto-starting the countdown
+  auto_start_delay_seconds: 10
+  # Automatically teleport players to team spawn points on match start (false = keep players where they are)
+  teleport_players_on_start: false
 
 # Teams Configuration
 teams:
