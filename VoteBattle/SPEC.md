@@ -34,7 +34,8 @@ Whether deployed on a multiplayer event server or integrated with **TikTok Live*
 - **Chat Formatting**: Custom chat renderer prefixes player messages with their active team badge.
 
 ### ⏳ 2. Sand Tower Physics & The "Like" Mechanic
-- **Tower Progression & Random Falling**: When a like is credited to a player/viewer (e.g. via `/like <player/viewer> [amount]` or `/vb like <player/viewer> [amount]`), sand blocks fall **randomly across the base platform**, creating dynamic and organic mounds of sand!
+- **Tower Progression & Random Falling**: When a like is credited to a player/viewer (e.g. via `/like <player/viewer> [amount]`, `/vb like <player/viewer> [amount]`, or HTTP `/api/like`), sand blocks fall **randomly across the base platform**, creating dynamic and organic mounds of sand!
+  - **Auto-Assign Team**: If the user giving a like has no team assigned yet, they are automatically assigned to a balanced team (team with fewer members, or randomly tie-broken) so their like immediately adds sand!
 - **Dynamic Physics & Staggered Drops**:
   - Drops falling sand blocks directly above randomly chosen `(X, Z)` positions across the base.
   - Multi-like barrages (e.g. `/like user 5`) are smoothly staggered with a 2-tick interval, raining sand down sequentially onto different parts of the base!
