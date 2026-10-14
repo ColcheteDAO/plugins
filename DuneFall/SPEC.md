@@ -106,8 +106,13 @@ DuneFall is designed for plug-and-play console automation. Configure your TikTok
 - `/dunefall bossbar [remove/show/lower/top/actionbar]` – Customize BossBar positioning or toggle action bar progress.
 - `/dunefall leaderboards` – Display the viewer interaction leaderboard in chat.
 
-### Economy, Shop & Gear
-- `/shop` *(or `/dunefall shop`)* – Open the interactive Specimen Shop GUI.
+### Economy, Shop & Storekeeper Commands
+- `/createstore [name]` *(or `/dunefall createstore`)* – Construct a physical laboratory store with a Villager attendant and sleek 3x3 kiosk booth. Right-clicking the villager opens the Shop interface!
+- `/store [create/villager/remove/clear/list]` – Administrative store management (spawn kiosk booths, spawn standalone shopkeeper villagers, remove nearby, clear all with safe block restoration).
+- `/shop` *(or `/buy`, `/dunefall shop`, `/dunefall buy`)* – Dedicated buying command:
+  - `/shop` – Open the interactive Specimen Shop GUI.
+  - `/shop buy <item>` *(or `/buy <item>`)* – Directly buy items from the shop by ID or convenient alias (e.g. `shovel`, `sword`, `mending`, `totem`, `speed`, `repair`, `upgrade`).
+  - `/shop list` – Catalog all purchasable items and their coin costs directly in chat.
 - `/sell` *(or `/dunefall sell [player]`)* – Liquidate all inventory blocks for coins.
 - `/dunefall repair [player]` – Restore equipped armor, held tools, or weapons back to 100% durability (2 coins/durability).
 - `/dunefall autorepair [on/off/status]` – Toggle or check real-time auto-repair status (2 coins/durability, activates below 50 durability until 100% recovered).
