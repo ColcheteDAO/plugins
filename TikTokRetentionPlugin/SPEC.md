@@ -1,6 +1,6 @@
 # 🎬 TikTokRetentionPlugin — Ultimate Interactive TikTok Live Challenge
 
-[![Release Version](https://img.shields.io/badge/Release-v1.0.47-brightgreen.svg)](#)
+[![Release Version](https://img.shields.io/badge/Release-v1.0.50-brightgreen.svg)](#)
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20%20--%201.21+-blue.svg)](#)
 [![Server Platforms](https://img.shields.io/badge/Supported-Paper%20%7C%20Spigot%20%7C%20Purpur-orange.svg)](#)
 [![Java Runtime](https://img.shields.io/badge/Java-17%2B-red.svg)](#)
@@ -28,7 +28,7 @@ Gone are the days of manual monitoring or clumsy external setups. TikTokRetentio
 * **🏆 Live Likers Leaderboard:** Track the top stream supporters in real time on both the Tab List and with in-game `/rank` commands.
 * **💬 Dual-Chat Trigger Support:** Viewers on TikTok or players in Minecraft chat can type `rank`, `ranking`, or `likes` to broadcast the current top supporters.
 * **📊 Seamless HUD & Action Bar:** Clean, flicker-free action bar displays current phase, remaining time, and viewer progress.
-* **💀 Dramatic Elimination Sequence:** Clears inventory, switches to Spectator, and blasts a cinematic full-screen "YOU LOSE" title if the timer expires.
+* **💀 Dramatic Elimination Sequence:** Shows a cinematic full-screen "YOU LOSE" title if the timer expires. If Sudden Death mode is enabled (disabled by default), also clears inventory and switches players to Spectator mode.
 * **🚀 High-Performance & Asynchronous:** All network requests and calculations run completely off the main server thread to guarantee a solid 20.0 TPS.
 
 ---
@@ -73,8 +73,10 @@ If your live viewer count dips below the required threshold, the plugin immediat
 ### 4. Defeat / Loss Sequence
 If the timer runs out before the viewer count recovers:
 * Full-screen red title: **YOU LOSE — Not enough visualizations!**
-* Player inventory is wiped clean.
-* Gamemode switches to `SPECTATOR`.
+* Chat broadcast: **GAME OVER! The countdown reached zero without reaching target viewers.**
+* **Sudden Death Mode (Disabled by default, toggleable via `/ttr suddendeath [on|off]`):**
+  * **When Disabled (Default):** Streamers/players only see the "YOU LOSE" title screen and chat broadcast. Inventory and gamemode are untouched, allowing seamless continuous play.
+  * **When Enabled:** Player inventory is wiped clean and gamemode switches to `SPECTATOR`.
 * Challenge enters paused/loss state.
 
 ---
@@ -117,6 +119,7 @@ Turn tapping into a game mechanic:
 | `/ttr rank [broadcast]` | `tiktokretention.user` | Displays stream likes leaderboard (add `broadcast` to show all). |
 | `/ttr timer <show\|hide>` | `tiktokretention.admin` | Toggles or hides the on-screen countdown timer. |
 | `/ttr hud <show\|hide>` | `tiktokretention.admin` | Controls whether action bar HUD is visible. |
+| `/ttr suddendeath [on\|off]` | `tiktokretention.admin` | Toggles Sudden Death mode (spectator & inventory clear on loss). |
 | `/ttr addtime <seconds>` | `tiktokretention.admin` | Adds or removes time from the current phase timer. |
 | `/ttr reset` | `tiktokretention.admin` | Resets current active phase timer to full duration. |
 | `/ttr status` | `tiktokretention.user` | Displays stream handle, phase, timer, viewers, and metrics. |
