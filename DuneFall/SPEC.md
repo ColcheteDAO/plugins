@@ -96,6 +96,7 @@ DuneFall is designed for plug-and-play console automation. Configure your TikTok
 - `/dunefall edit` – Toggle arena build protection for live customization.
 - `/dunefall wl [reset]` – View or reset your live-stream Win/Loss record.
 - `/dunefall damage_protection` – Toggle fall, explosion, and mob damage protection.
+- `/dunefall deathexplosion [on/off]` – Toggle or configure radial death item explosion physics.
 
 ### HUD & Display Control
 - `/hud` *(or `/dunefall hud`)* – Toggle the entire HUD (Scoreboard, BossBar, Action Bar) on/off.
